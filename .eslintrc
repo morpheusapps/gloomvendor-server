@@ -1,0 +1,61 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "promise", "standard", "jest"],
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
+  ],
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "key-spacing": 0,
+    "keyword-spacing": [0, { "before": false }],
+    "space-before-blocks": [0, "never"],
+    "spaced-comment": 0,
+    "max-len": "off",
+    "object-curly-spacing": [1, "always"],
+    "no-unmodified-loop-condition": ["off"],
+    "import/no-extraneous-dependencies": 0,
+    "consistent-return": "off",
+    "linebreak-style": 0,
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "no-mixed-operators": "warn",
+    "no-restricted-syntax": "warn",
+    "no-restricted-properties": "warn",
+    "guard-for-in": "warn",
+    "comma-dangle": ["error", "never"],
+    "no-confusing-arrow": "off",
+    "import/no-unresolved": [
+      2,
+      { "commonjs": true, "amd": true, "caseSensitive": false }
+    ],
+    "one-var": "off",
+    "no-undef": "error",
+    "no-console": "error",
+    "no-tabs": "off",
+    "no-mixed-spaces-and-tabs": "off",
+    "import/extensions": "off",
+    "standard/computed-property-even-spacing": "off",
+    "no-useless-concat": "warn",
+    "prefer-default-export": "off",
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "warn",
+    "prefer-destructuring": "warn",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "warn",
+    "function-paren-newline": "off",
+    "no-useless-constructor": "off"
+  },
+  "overrides": []
+}

@@ -1,0 +1,9 @@
+yarn.lock
+yarn-error.log
+*/node_modules/**
+*.rej
+tsconfig.json
+nodemon.json
+prettier.config.json
+.eslintrc
+.eslintignore
