@@ -7,7 +7,8 @@ import {
   Min,
   Max,
   IsOptional,
-  Matches
+  Matches,
+  IsUrl
 } from 'class-validator';
 
 enum ItemSlot {
@@ -34,15 +35,25 @@ export class Item {
   name: string;
 
   @Matches(/^(one-handed|two-handed|head|chest|boots|consumable)$/)
-  @ApiProperty({ enum: ItemSlot, required: true, example: 'one-handed' })
+  @ApiProperty({ enum: ItemSlot, required: true, example: 'boots' })
   @Column({ type: 'enum', enum: ItemSlot })
   slot: ItemSlot;
 
   @IsString()
-  //@IsUrl()
-  @ApiProperty({ required: true, example: '...' })
+  @IsUrl()
+  @ApiProperty({
+    required: true,
+    example:
+      'https://gloomhavendb.com/assets/cards/items/1-14/boots-of-striding.png'
+  })
   @Column({ type: 'text' })
   image: string;
+
+  @IsInt()
+  @Min(5)
+  @ApiProperty({ required: true, example: 20 })
+  @Column({ type: 'integer' })
+  price: number;
 
   @IsOptional()
   @IsInt()
