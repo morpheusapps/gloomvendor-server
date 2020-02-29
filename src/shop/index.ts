@@ -1,0 +1,1 @@
+export { ShopModule } from './ShopModule';

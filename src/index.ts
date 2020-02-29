@@ -13,7 +13,7 @@ const runServer = async (port: string | number): Promise<void> => {
     .setVersion('1.0.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('swagger-ui.html', app, document);
+  SwaggerModule.setup('swagger', app, document);
   return app.listen(port, () =>
     // eslint-disable-next-line no-console
     console.log('gloomvendor-server service running on ' + port)

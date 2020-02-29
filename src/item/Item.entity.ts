@@ -1,14 +1,8 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ObjectType, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsInt,
-  IsString,
-  Min,
-  Max,
-  IsOptional,
-  IsUrl,
-  IsIn
-} from 'class-validator';
+import { IsInt, IsString, Min, IsOptional, IsUrl, IsIn } from 'class-validator';
+import { Prosperity } from '../types';
+import { ShopQuantity } from '../shopQuantity/ShopQuantity.entity';
 
 enum ItemSlot {
   OneHand = 'One Hand',
@@ -21,14 +15,12 @@ enum ItemSlot {
 
 const ItemQuantity = [1, 2, 4] as const;
 
-const ItemProsperity = [1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
-
 @Entity()
 export class Item {
   @IsInt()
   @Min(1)
   @ApiProperty({ required: true, example: 1 })
-  @PrimaryColumn({ type: 'integer' })
+  @PrimaryColumn('integer')
   id: number;
 
   @IsString()
@@ -48,25 +40,29 @@ export class Item {
     example:
       'https://gloomhavendb.com/assets/cards/items/1-14/boots-of-striding.png'
   })
-  @Column({ type: 'text' })
+  @Column('text')
   image: string;
 
   @IsInt()
   @Min(5)
   @ApiProperty({ required: true, example: 20 })
-  @Column({ type: 'integer' })
+  @Column('integer')
   price: number;
 
   @IsIn(Object.values(ItemQuantity))
   @ApiProperty({ enum: ItemQuantity, required: true, example: 2 })
-  @Column({ type: 'integer' })
+  @Column('integer')
   quantity: typeof ItemQuantity[number];
 
   @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(9)
-  @ApiProperty({ enum: ItemProsperity, example: 1 })
-  @Column({ type: 'enum', enum: ItemProsperity, nullable: true })
-  prosperity?: typeof ItemProsperity[number];
+  @IsIn(Object.values(Prosperity))
+  @ApiProperty({ enum: Prosperity, example: 1 })
+  @Column({ type: 'enum', enum: Prosperity, nullable: true })
+  prosperity?: typeof Prosperity[number];
+
+  @OneToMany(
+    (): ObjectType<ShopQuantity> => ShopQuantity,
+    (shopQuantity: ShopQuantity): number => shopQuantity.item
+  )
+  relations?: ShopQuantity[];
 }

@@ -6,7 +6,7 @@
   "password": "root",
   "database": "postgres",
   "schema": "gloomvendor",
-  "entities": ["src/**/*.entity{.ts,.js}"],
+  "entities": ["src/**/*.entity.{ts,js}"],
   "synchronize": true,
   "logging": false
 }

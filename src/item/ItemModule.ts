@@ -7,6 +7,7 @@ import { Item } from './Item.entity';
 @Module({
   imports: [forwardRef((): DynamicModule => TypeOrmModule.forFeature([Item]))],
   controllers: [ItemController],
-  providers: [ItemService]
+  providers: [ItemService],
+  exports: [ItemService]
 })
 export class ItemModule {}
