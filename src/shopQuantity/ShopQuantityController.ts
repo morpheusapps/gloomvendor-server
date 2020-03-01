@@ -1,5 +1,5 @@
-import { Controller, Post, Param, Get, Body, Patch } from '@nestjs/common';
-import { ApiTags, ApiParam, ApiOkResponse } from '@nestjs/swagger';
+import { Controller, Post, Get, Body, Patch, Query } from '@nestjs/common';
+import { ApiTags, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { ShopQuantityService } from './ShopQuantityService';
 import { ShopQuantity } from './ShopQuantity.entity';
 
@@ -9,12 +9,19 @@ export class ShopQuantityController {
   constructor(private readonly shopQuantityService: ShopQuantityService) {}
 
   @Get()
+  @ApiQuery({
+    name: 'shop',
+    schema: { type: 'string', format: 'uuid' },
+    required: false
+  })
   @ApiOkResponse({
     description: 'Successfully fetched shop quantity',
     type: ShopQuantity
   })
-  getShopQuantities(): Promise<ShopQuantity[]> {
-    return this.shopQuantityService.findShopQuantities();
+  getShopQuantities(@Query('shop') shop?: string): Promise<ShopQuantity[]> {
+    return shop
+      ? this.shopQuantityService.findShopQuantitiesByShopId(shop)
+      : this.shopQuantityService.findShopQuantities();
   }
 
   @Post()
@@ -22,18 +29,6 @@ export class ShopQuantityController {
     @Body() shopQuantity: ShopQuantity
   ): Promise<ShopQuantity> {
     return this.shopQuantityService.insertShopQuantity(shopQuantity);
-  }
-
-  @Get('shop/:shop')
-  @ApiParam({ name: 'shop', schema: { type: 'string', format: 'uuid' } })
-  @ApiOkResponse({
-    description: 'Successfully fetched shop quantity',
-    type: ShopQuantity
-  })
-  getShopQuantitiesByShop(
-    @Param('shop') shop: string
-  ): Promise<ShopQuantity[]> {
-    return this.shopQuantityService.findShopQuantitiesByShopId(shop);
   }
 
   @Patch()
