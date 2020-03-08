@@ -21,7 +21,6 @@ export class ShopQuantityService {
   findShopQuantitiesByShopId(shopId: string): Promise<ShopQuantity[]> {
     return this.shopQuantityRepository.find({
       relations: ['item'],
-      loadRelationIds: true,
       where: { shop: shopId }
     });
   }
